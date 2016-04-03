@@ -22,7 +22,7 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
     $scope.valueFromService = UtilSrvc.helloWorld("Amy");
 
     var d=new Date();
-    d.setHours(0);
+    d.setHours(12);
 	d.setMinutes(0);
 	d.setSeconds(0);
 	d.setMilliseconds(0);
@@ -142,6 +142,10 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
     //$scope.day=$scope.day.formatDate();
     function convert(){
         $scope.day = $scope.d.toISOString().slice(0, 10);
+        
+        $scope.weekNumber=$scope.d.getWeekNumber();
+        $scope.weekDay=$scope.d.getWeekDay();
+
         //demanar dades actuals a la api
     }
 
@@ -273,6 +277,30 @@ refresh();
         // called asynchronously if an error occurs
         // or server returns response with an error status.
       });
+    }
+
+
+    $scope.submit=function(){
+     
+        var data={
+            slug:$scope.project,
+            comments:'',
+        
+        }
+        $http({
+          method: 'POST',
+          url: 'db/project',
+          data:data,
+          
+        }).then(function successCallback(response) {
+            refresh();
+
+          }, function errorCallback(response) {
+            console.log(response);
+          });
+
+
+
     }
 
 });

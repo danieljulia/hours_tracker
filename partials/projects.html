@@ -9,3 +9,9 @@
 <ul class="projects noactive">
 <li  ng-repeat="p in projects_hidden"> {{p.slug}}  <a ng-click="show()">mostrar</a></li> 
 </ul>
+
+<h2>Add new project</h2>
+<form class="form-horizontal" name="helpForm" novalidate role="form">
+<input type="text" name="project" data-ng-model="project" class="form-control" required />
+<button  data-ng-click="submit()" class="btn btn-default">Add Project</button>
+</form>
