@@ -1,0 +1,32 @@
+
+<h2>{{ day }}</h2>
+<div class="abstract">
+Day: x hours
+Week: x hours
+
+</div>
+<ul class="hours" ng-repeat="h in hours">
+
+<li>{{h.project_slug}} {{h.hours}}h <a ng-click="del()">x</a></li> 
+
+
+</ul>
+<form class="form-horizontal" name="helpForm" novalidate role="form">
+<select name="project" data-ng-model="myprojects" data-ng-options="v.slug as v.slug for v in projects" required> 
+  <option value=""></option>
+</select>
+     <input type="number" name="hours" data-ng-model="myhours" class="form-control" required />
+  <button  data-ng-click="submit()" class="btn btn-default">Add</button>
+</form>
+
+<nav class="navigation">
+<p class="days">
+<a ng-click="prev()">< prev</a>
+<a ng-click="next()">next ></a>
+</p>
+<p class="weeks">
+<a ng-click="prevWeek()">< prev week</a>
+<a ng-click="nextWeek()">next week ></a>
+</p>
+</nav>
+

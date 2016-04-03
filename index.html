@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>Personal task administrator</title>
+  <link rel="stylesheet" href="css/app.css"/>
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+</head>
+<body>
+  <ul class="menu">
+    <li><a href="#/home">Home</a></li>
+    <li><a href="#/hours">Hours</a></li>
+    <li><a href="#/projects">Projects</a></li>
+    <lI>{{ user }}</li>
+  </ul>
+
+  <div ng-view></div>
+
+  <script src="lib/angular/angular.js"></script>
+  <script src="js/routes.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/directives.js"></script>
+  <script src="js/angular-local-storage.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/google-auth.min.js"></script>
+  <script type="text/javascript">
+      (function() {
+       var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+       po.src = 'https://apis.google.com/js/client:plusone.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+     })();
+    </script>
+
+</body>
+</html>
