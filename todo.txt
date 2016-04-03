@@ -1,0 +1,15 @@
+todo.txt
+----
+
+
+- get total for current day
+- get total for week
+- get stats in dashboard
+	- hours by project
+	- hours by week?
+- delete a project, only if has empty hours
+- add comments and budget for every project
+- add comments when subimiting hours
+
+
+http://www.redbeanphp.com/index.php?p=/querying

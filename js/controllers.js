@@ -121,13 +121,14 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
       }).then(function successCallback(response) {
         $scope.hours=new Array();
         //filter by current user
-        console.log("recuperant hores..",response.data);
+        $scope.total=0;
+
         for(var i=0;i<response.data.length;i++){
           var r=response.data[i];
-          console.log(r);
+          
           if( r.user_id==$rootScope.user ){
             $scope.hours.push(r);
-          
+            $scope.total+=r.hours; 
           }
 
         }
