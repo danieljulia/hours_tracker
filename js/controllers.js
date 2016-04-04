@@ -131,7 +131,7 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
           
           if( r.user_id==$rootScope.user ){
             $scope.hours.push(r);
-            $scope.total+=r.hours; 
+            $scope.total+=parseInt(r.hours); 
           }
 
         }
