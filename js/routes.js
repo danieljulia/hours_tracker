@@ -6,6 +6,21 @@ var myApp = angular.module('myApp', [
 ])
 
 
+angular.module('myApp').directive('ngEnter', function() {
+        return function(scope, element, attrs) {
+            element.bind("keydown keypress", function(event) {
+                if(event.which === 13) {
+                    scope.$apply(function(){
+                        scope.$eval(attrs.ngEnter, {'event': event});
+                    });
+
+                    event.preventDefault();
+                }
+            });
+        };
+    });
+
+/*
 // override the default input to update on blur
 myApp.directive('ngModelOnblur', function() {
     return {
@@ -24,7 +39,7 @@ myApp.directive('ngModelOnblur', function() {
         }
     };
 });
-
+*/
 
 
 myApp.config(function($routeProvider) {
