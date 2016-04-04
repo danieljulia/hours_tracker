@@ -48,14 +48,17 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
     
 
 
-    $scope.submit=function(){
+    $scope.add=function(){
      
+
         var data={
-            project_slug:$scope.myprojects,
-            hours:$scope.myhours,
+            project_slug:this.p.slug,
+            hours:this.myhours,
             day:$scope.day,
             user_id:$rootScope.user
         }
+        this.myhours=null;
+
         $http({
           method: 'POST',
           url: 'db/hours',
@@ -64,8 +67,8 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
         }).then(function successCallback(response) {
             //refresh
              gethours();
-             $scope.myprojects=null;
-             $scope.myhours=null;
+             
+             
 
           }, function errorCallback(response) {
             console.log(response);

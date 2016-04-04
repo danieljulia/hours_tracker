@@ -13,3 +13,11 @@ todo.txt
 
 
 http://www.redbeanphp.com/index.php?p=/querying
+
+
+- update to latest version of angular! now it's an old version
+
+done
+----
+
+- now you can add all project hours at the same time
