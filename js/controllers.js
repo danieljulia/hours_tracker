@@ -78,6 +78,10 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
 
     }
  $scope.del=function(){
+  console.log(this.h);
+    
+    if(this.h.id==0) return;
+
    $http({
           method: 'DELETE',
           url: 'db/hours/'+this.h.id
