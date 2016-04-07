@@ -15,6 +15,8 @@ angular.module('myApp').directive('ngEnter', function() {
                     });
 
                     event.preventDefault();
+                    //console.log(event);
+                   // event.srcElement.next().focus();
                 }
             });
         };

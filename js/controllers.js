@@ -27,10 +27,11 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
 	d.setSeconds(0);
 	d.setMilliseconds(0);
 	$scope.d=d;
+  $scope.showcomment=false;
 	convert();
 
-    
-	
+
+
      //get all the projects
 
     $http({
@@ -45,11 +46,15 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
       });
 
     gethours();
-    
+
 
 
     $scope.add=function(){
-     
+
+        if(parseInt(this.myhours)==0) return;
+
+      //  alert($scope.mycomment);
+        //console.log($scope.p);
 
         var data={
             project_slug:this.p.slug,
@@ -63,12 +68,12 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
           method: 'POST',
           url: 'db/hours',
           data:data,
-          
+
         }).then(function successCallback(response) {
             //refresh
              gethours();
-             
-             
+
+
 
           }, function errorCallback(response) {
             console.log(response);
@@ -79,20 +84,24 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
     }
  $scope.del=function(){
   console.log(this.h);
-    
+
     if(this.h.id==0) return;
 
    $http({
           method: 'DELETE',
           url: 'db/hours/'+this.h.id
-        
+
         }).then(function successCallback(response) {
-           
+
              gethours();
 
           }, function errorCallback(response) {
             console.log(response);
           });
+
+ }
+
+ $scope.docomment=function(){
 
  }
 
@@ -132,10 +141,10 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
 
         for(var i=0;i<response.data.length;i++){
           var r=response.data[i];
-          
+
           if( r.user_id==$rootScope.user ){
             $scope.hours.push(r);
-            $scope.total+=parseInt(r.hours); 
+            $scope.total+=parseInt(r.hours);
           }
 
         }
@@ -145,12 +154,12 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
         // or server returns response with an error status.
       });
     }
-    
+
 
     //$scope.day=$scope.day.formatDate();
     function convert(){
         $scope.day = $scope.d.toISOString().slice(0, 10);
-        
+
         $scope.weekNumber=$scope.d.getWeekNumber();
         $scope.weekDay=$scope.d.getWeekDay();
 
@@ -165,24 +174,24 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
 myApp.controller("Home" ,function ($scope,$rootScope,jrgGoogleAuth,localStorageService) {
 
     //hardcoded
-    
+
     //initialize google auth with client id
     // jrgGoogleAuth.init({'client_id':googleClientId, 'scope':'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email'});
     jrgGoogleAuth.init({'client_id':config.googleClientId, 'scopeHelp':['login']});
 
     //do actual login
     var evtGoogleLogin ="evtGoogleLogin";
- 
-    
+
+
 
 
     $scope.googleLogin =function() {
-       
+
         jrgGoogleAuth.login({'extraInfo':{'user_id':true}, 'callback':{'evtName':evtGoogleLogin, 'args':[]} });
     };
 
      $scope.googleLogout=function() {
-       
+
         //jrgGoogleAuth.logout();
         localStorageService.remove('user');
         $rootScope.user=null;
@@ -190,9 +199,9 @@ myApp.controller("Home" ,function ($scope,$rootScope,jrgGoogleAuth,localStorageS
     };
 
     $rootScope.user=localStorageService.get('user');
-    
 
-    
+
+
     $scope.googleInfo;
 
 
@@ -203,8 +212,8 @@ myApp.controller("Home" ,function ($scope,$rootScope,jrgGoogleAuth,localStorageS
          $rootScope.user=localStorageService.get('user');
     });
     //$scope.googleLogin();
-    
-   
+
+
     function slugify(text)
 {
   return text.toString().toLowerCase()
@@ -219,7 +228,7 @@ myApp.controller("Home" ,function ($scope,$rootScope,jrgGoogleAuth,localStorageS
 });
 
 myApp.controller("Projects" ,function ($scope,$rootScope,$location,localStorageService,$http) {
-  
+
  if($rootScope.user==null){
     $location.path("home");
     return;
@@ -233,7 +242,7 @@ refresh();
       url: 'db/project/visible/1'
     }).then(function successCallback(response) {
         $scope.projects=response.data;
-       
+
       }, function errorCallback(response) {
         // called asynchronously if an error occurs
         // or server returns response with an error status.
@@ -243,14 +252,14 @@ refresh();
       url: 'db/project/visible/0'
     }).then(function successCallback(response) {
         $scope.projects_hidden=response.data;
-       
+
       }, function errorCallback(response) {
         // called asynchronously if an error occurs
         // or server returns response with an error status.
       });
 
     }
-    
+
 
     $scope.hide = function() {
             console.log(this.p.slug);
@@ -261,7 +270,7 @@ refresh();
         visible:0
       }
     }).then(function successCallback(response) {
-        
+
         refresh();
       }, function errorCallback(response) {
         // called asynchronously if an error occurs
@@ -279,7 +288,7 @@ refresh();
         visible:1
       }
     }).then(function successCallback(response) {
-        
+
         refresh();
       }, function errorCallback(response) {
         // called asynchronously if an error occurs
@@ -289,17 +298,17 @@ refresh();
 
 
     $scope.submit=function(){
-     
+
         var data={
             slug:$scope.project,
             comments:'',
-        
+
         }
         $http({
           method: 'POST',
           url: 'db/project',
           data:data,
-          
+
         }).then(function successCallback(response) {
             refresh();
 
@@ -312,4 +321,3 @@ refresh();
     }
 
 });
-

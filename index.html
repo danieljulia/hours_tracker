@@ -7,15 +7,22 @@
 
 </head>
 <body>
+  <header>
+    <nav>
   <ul class="menu">
     <li><a href="#/home">Home</a></li>
     <li><a href="#/hours">Hours</a></li>
     <li><a href="#/projects">Projects</a></li>
     <lI>{{ user }}</li>
   </ul>
+</nav>
+</header>
+<main class="content" ng-view>
 
-  <div ng-view></div>
-
+</main>
+<footer>
+Hours Management by <a href="http://pimoampum.net">pimpampum.net</a>
+</footer>
 
 <script src="js/tools.js"></script>
   <script src="lib/angular/angular.min.js"></script>
