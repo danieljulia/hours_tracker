@@ -5,5 +5,14 @@
 <button  ng-show="user == null" ng-click='googleLogin()'>Login</button>
 <button  ng-show="user != null" ng-click='googleLogout()'>Logout</button>
 
-Very interesting stats... about the hours...
+<h1>Stats</h1>
+<h2>Projects</h2>
 
+<ul class="projects">
+<li  ng-repeat="p in projects"> {{p.project_slug}} : {{p.t}}</li>
+</ul>
+
+<h2>Weeks</h2>
+<ul class="weeks">
+<li  ng-repeat="w in weeks"> week{{w.w}} :  {{w.t}}</li>
+</ul>

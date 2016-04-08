@@ -171,7 +171,7 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
 
 
 
-myApp.controller("Home" ,function ($scope,$rootScope,jrgGoogleAuth,localStorageService) {
+myApp.controller("Home" ,function ($scope,$http,$rootScope,jrgGoogleAuth,localStorageService) {
 
     //hardcoded
 
@@ -182,6 +182,27 @@ myApp.controller("Home" ,function ($scope,$rootScope,jrgGoogleAuth,localStorageS
     //do actual login
     var evtGoogleLogin ="evtGoogleLogin";
 
+
+        $http({
+          method: 'GET',
+          url: 'db/stats.php?option=projects_get'
+        }).then(function successCallback(response) {
+            $scope.projects=response.data;
+
+          }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+          });
+          $http({
+            method: 'GET',
+            url: 'db/stats.php?option=weeks_get'
+          }).then(function successCallback(response) {
+              $scope.weeks=response.data;
+
+            }, function errorCallback(response) {
+              // called asynchronously if an error occurs
+              // or server returns response with an error status.
+            });
 
 
 
