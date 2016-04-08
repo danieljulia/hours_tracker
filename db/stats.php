@@ -15,11 +15,11 @@ if(isset($_GET['option'])){
 
 switch($option){
     case 'projects_get':
-      $projects = R::getAll('SELECT project_slug,count(hours) as t FROM hours group by project_slug order by t desc' );
+      $projects = R::getAll('SELECT project_slug,sum(hours) as t FROM hours group by project_slug order by t desc' );
       print json_encode($projects);
       break;
     case 'weeks_get':
-      $weeks = R::getAll( 'select WEEK(day) as w,count(hours) as t from hours group by w order by w desc' );
+      $weeks = R::getAll( 'select WEEK(day) as w,sum(hours) as t from hours group by w order by w desc' );
       print json_encode($weeks);
       break;
 }
