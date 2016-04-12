@@ -36,7 +36,7 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
 
     $http({
       method: 'GET',
-      url: 'db/project/visible/1'
+      url: 'db/project/visible/1?by=slug&order=asc'
     }).then(function successCallback(response) {
         $scope.projects=response.data;
         console.log(response.data);
@@ -51,7 +51,7 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
 
     $scope.add=function(){
 
-        if(parseInt(this.myhours)==0) return;
+        if(parseFloat(this.myhours)==0) return;
 
       //  alert($scope.mycomment);
         //console.log($scope.p);
@@ -143,8 +143,11 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
           var r=response.data[i];
 
           if( r.user_id==$rootScope.user ){
+            console.log(r.hours);
+            if(r.hours % 1 == 0) r.hours=parseInt(r.hours);
+            else r.hours=parseFloat(r.hours);
             $scope.hours.push(r);
-            $scope.total+=parseInt(r.hours);
+            $scope.total+=parseFloat(r.hours);
           }
 
         }
