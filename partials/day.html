@@ -1,4 +1,4 @@
-
+<div class="info_hores">
 <h2>Week {{weekNumber}}</h2>
 <h3>{{weekDay}} {{day}}</h3>
 <div class="abstract">
@@ -12,9 +12,10 @@ Week: x hours
 <ul class="hours" >
 <li ng-repeat="h in hours">{{h.project_slug}} {{h.hours}}h <a ng-click="del()">x</a></li>
 </ul>
+</div>
 
 <ul class="projects add">
-<li  ng-repeat="p in projects"> {{p.slug}}  <input  ng-enter="add()" name="hours{{p.slug}}" data-ng-model="myhours" class="form-control" placeholder="hours" required />
+<li  ng-repeat="p in projects"><span class="nom">{{p.slug}}</span>  <input  ng-enter="add()" name="hours{{p.slug}}" data-ng-model="myhours" class="form-control" placeholder="hours" required />
 <a title="add hours" ng-click="add()">+   </a>
 <a title="add comment" class="comment" ng-click="docomment()">c</a><input type="text" ng-show="false" ng-model="mycomment" placeholder="your comment">
  </li>

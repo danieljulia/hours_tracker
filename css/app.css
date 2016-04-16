@@ -1,24 +1,105 @@
 /* app css stylesheet */
 
+* {
+box-sizing: border-box;
+}
+
+body {
+font-family: helvetica, arial, sans-serif;
+font-size: 0.9375rem;
+line-height: 1.5;
+background-color: #eaeaea;
+}
+
+.container {
+max-width: 1200px;
+margin: 0 auto;
+}
+
+header {
+width: 150px;
+float: left;
+padding: 20px;
+}
+
+.content {
+padding: 40px;
+background-color: #fff;
+}
+
+footer {
+padding: 20px 0 50px 0;
+}
+
 .menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+list-style: none;
+font-weight: bold;
+padding-left: 0;
+}
+
+h1, h2 {
+margin: 0;
+}
+
+a, a:visited {
+color: #f00;
+text-decoration: none;
+padding: 10px;
+}
+
+a:hover {
+text-decoration: underline;
+cursor: pointer;
+}
+
+.info_hores {
+width: 200px;
+float: left;
+}
+
+.hours {
+padding-left: 0;
+}
+
+.projects {
+padding-left: 0;
+}
+
+.projects.add {
+-webkit-column-width: 350px;
+column-width: 350px;
+}
+
+.projects li {
+padding: 5px 20px;
+list-style-type: none;
+}
+
+.projects li:nth-of-type(odd) {
+background-color: #eaeaea;
+}
+
+.projects input {
+width: 60px;
+padding: 4px 10px;
+font-size: 0.9375rem;
+color: #00f;
+font-weight: bold;
+margin: 0 10px;
+}
+
+.nom {
+min-width: 150px;
+display: inline-block;
 }
 
 
 
-.menu > li {
-  display: inline;
-}
 
-.menu > li:before {
-  content: "|";
-  padding-right: 0.3em;
-}
 
-.menu > li:nth-child(1):before {
-  content: "";
-  padding: 0;
-}
+
+
+
+
+
+
