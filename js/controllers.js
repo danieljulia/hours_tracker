@@ -60,10 +60,13 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
             project_slug:this.p.slug,
             hours:this.myhours,
             day:$scope.day,
-            user_id:$rootScope.user
+            user_id:$rootScope.user,
+            comments:this.mycomment
         }
         this.myhours=null;
-
+        this.mycomment=null;
+        this.p.c=false;
+        
         $http({
           method: 'POST',
           url: 'db/hours',
@@ -101,8 +104,12 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
 
  }
 
- $scope.docomment=function(){
+ $scope.docomment=function($index){
 
+   $scope.projects[$index].c=!$scope.projects[$index].c;
+  // console.log($scope.mycomment[$index]);
+
+   //$scope.showcomment=true;
  }
 
     $scope.next=function(){
