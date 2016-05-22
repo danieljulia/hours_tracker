@@ -10,7 +10,7 @@ Week: x hours
 
 </div>
 <ul class="hours" >
-<li ng-repeat="h in hours">{{h.project_slug}} {{h.hours}}h {{h.comments}}<a ng-click="del()">x</a></li>
+<li ng-repeat="h in hours" style="background-color:{{toColor(h.project_slug)}}">{{h.project_slug}} {{h.hours}}h {{h.comments}}<a ng-click="del()">x</a></li>
 </ul>
 </div>
 
