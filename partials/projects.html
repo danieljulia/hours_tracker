@@ -2,12 +2,12 @@
 
 <h2>Active projects</h2>
 <ul class="projects" >
-<li ng-repeat="p in projects"> {{p.slug}}  <a ng-click="hide()">hide</a></li>
+<li ng-repeat="p in projects" style="background-color:{{toColor(p.slug)}}"> {{p.slug}}  <a ng-click="hide()">hide</a></li>
 </ul>
 
 <h2>Hidden projects</h2>
 <ul class="projects noactive">
-<li  ng-repeat="p in projects_hidden"> {{p.slug}}  <a ng-click="show()">show</a></li> 
+<li  ng-repeat="p in projects_hidden" style="background-color:{{toColor(p.slug)}}"> {{p.slug}}  <a ng-click="show()">show</a></li>
 </ul>
 
 <h2>Add new project</h2>

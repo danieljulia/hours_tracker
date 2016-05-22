@@ -15,7 +15,9 @@ Week: x hours
 </div>
 
 <ul class="projects add">
-<li  ng-repeat="p in projects"><span class="nom">{{p.slug}}</span>
+<li  ng-repeat="p in projects">
+
+  <span style="background-color:{{toColor(p.slug)}}" class="nom">{{p.slug}}</span>
   <input  ng-enter="add()" name="hours{{p.slug}}" data-ng-model="myhours" class="form-control" placeholder="hours" required />
 
     <a title="add hours" ng-click="add()">+</a>

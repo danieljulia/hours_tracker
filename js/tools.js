@@ -22,3 +22,22 @@ Date.prototype.getWeekDay= function(){
 
 
 
+toColor=function(str){
+
+  var hash = 0;
+  for (var i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  var colour = '#';
+  for (var i = 0; i < 3; i++) {
+      var value = (hash >> (i * 8)) & 0xFF;
+      console.log(value);
+      //que siguin colors clars
+      if(value<128) value+=128;
+    //  if(value<128) value+=64;
+      if(value>=256) value=255;
+
+      colour += ('00' + value.toString(16)).substr(-2);
+  }
+  return colour;
+}

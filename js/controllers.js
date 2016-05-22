@@ -66,7 +66,7 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
         this.myhours=null;
         this.mycomment=null;
         this.p.c=false;
-        
+
         $http({
           method: 'POST',
           url: 'db/hours',
@@ -165,6 +165,10 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
       });
     }
 
+    //todo d'un altre manera, servei?
+    $scope.toColor=function(str){
+      return toColor(str);
+    }
 
     //$scope.day=$scope.day.formatDate();
     function convert(){
@@ -351,4 +355,8 @@ refresh();
 
     }
 
+    //todo d'un altre manera, servei?
+    $scope.toColor=function(str){
+      return toColor(str);
+    }
 });
