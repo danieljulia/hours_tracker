@@ -9,7 +9,7 @@
 <h2>Projects</h2>
 
 <ul class="projects">
-<li  ng-repeat="p in projects"> {{p.project_slug}} : {{p.t}}</li>
+<li  ng-repeat="p in projects" style="border-left: 10px solid {{toColor(p.project_slug)}}"> {{p.project_slug}} : {{p.t}}</li>
 </ul>
 
 <h2>Weeks</h2>

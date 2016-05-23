@@ -248,6 +248,12 @@ myApp.controller("Home" ,function ($scope,$http,$rootScope,jrgGoogleAuth,localSt
     });
     //$scope.googleLogin();
 
+    //todo d'un altre manera, servei?
+    $scope.toColor=function(str){
+      return toColor(str);
+    }
+
+    
 
     function slugify(text)
 {

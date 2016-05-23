@@ -10,14 +10,14 @@ Week: x hours
 
 </div>
 <ul class="hours" >
-<li ng-repeat="h in hours" style="background-color:{{toColor(h.project_slug)}}">{{h.project_slug}} {{h.hours}}h {{h.comments}}<a ng-click="del()">x</a></li>
+<li ng-repeat="h in hours" style="border-left: 10px solid {{toColor(h.project_slug)}}">{{h.project_slug}} {{h.hours}}h {{h.comments}}<a ng-click="del()">x</a></li>
 </ul>
 </div>
 
 <ul class="projects add">
 <li  ng-repeat="p in projects">
 
-  <span style="background-color:{{toColor(p.slug)}}" class="nom">{{p.slug}}</span>
+  <span style="border-left: 10px solid {{toColor(p.slug)}}" class="nom">{{p.slug}}</span>
   <input  ng-enter="add()" name="hours{{p.slug}}" data-ng-model="myhours" class="form-control" placeholder="hours" required />
 
     <a title="add hours" ng-click="add()">+</a>
