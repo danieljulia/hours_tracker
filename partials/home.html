@@ -9,7 +9,8 @@
 <h2>Projects</h2>
 
 <ul class="projects">
-<li  ng-repeat="p in projects" style="border-left: 10px solid {{toColor(p.project_slug)}}"> {{p.project_slug}} : {{p.t}}</li>
+<li  ng-repeat="p in projects" style="border-left: 10px solid {{toColor(p.slug)}}">
+  {{p.slug}} : {{p.total}}h <span ng-if="p.budget>0" class='info'>{{p.budget}}€ ratio:{{p.budget/p.total}}€/h</span></li>
 </ul>
 
 <h2>Weeks</h2>

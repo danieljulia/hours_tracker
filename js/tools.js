@@ -31,7 +31,7 @@ toColor=function(str){
   var colour = '#';
   for (var i = 0; i < 3; i++) {
       var value = (hash >> (i * 8)) & 0xFF;
-      console.log(value);
+      
       //que siguin colors clars
       if(value<128) value+=128;
     //  if(value<128) value+=64;

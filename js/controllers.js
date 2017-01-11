@@ -39,7 +39,7 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
       url: 'db/project/visible/1?by=slug&order=asc'
     }).then(function successCallback(response) {
         $scope.projects=response.data;
-        console.log(response.data);
+
       }, function errorCallback(response) {
         // called asynchronously if an error occurs
         // or server returns response with an error status.
@@ -63,9 +63,12 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
             user_id:$rootScope.user,
             comments:this.mycomment
         }
+
+
         this.myhours=null;
         this.mycomment=null;
         this.p.c=false;
+        var scope=this;
 
         $http({
           method: 'POST',
@@ -75,20 +78,21 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
         }).then(function successCallback(response) {
             //refresh
              gethours();
-
-
+             counthours(scope.p.slug);
 
           }, function errorCallback(response) {
-            console.log(response);
+
           });
 
 
 
     }
  $scope.del=function(){
-  console.log(this.h);
+
 
     if(this.h.id==0) return;
+    var scope=this;
+  
 
    $http({
           method: 'DELETE',
@@ -97,9 +101,10 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
         }).then(function successCallback(response) {
 
              gethours();
+             counthours(scope.h.project_slug);
 
           }, function errorCallback(response) {
-            console.log(response);
+
           });
 
  }
@@ -135,6 +140,25 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
 
     //private functions
 
+    //simply counts the hours for the project, i know, it's not perfect
+
+    function counthours(slug){
+        console.log("counting hours");
+
+            $http({
+              method: 'GET',
+              url: 'db/stats.php?option=count_hours&slug='+slug
+
+                }).then(function successCallback(response) {
+                        console.log("oo",response)
+
+                        }, function errorCallback(response) {
+                          console.log("ooo",response);
+                        });
+
+
+    }
+
     function gethours(){
             //get hours for current day
 
@@ -150,7 +174,7 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
           var r=response.data[i];
 
           if( r.user_id==$rootScope.user ){
-            console.log(r.hours);
+
             if(r.hours % 1 == 0) r.hours=parseInt(r.hours);
             else r.hours=parseFloat(r.hours);
             $scope.hours.push(r);
@@ -158,7 +182,7 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
           }
 
         }
-        console.log(response.data);
+
       }, function errorCallback(response) {
         // called asynchronously if an error occurs
         // or server returns response with an error status.
@@ -242,7 +266,7 @@ myApp.controller("Home" ,function ($scope,$http,$rootScope,jrgGoogleAuth,localSt
 
     $scope.$on(evtGoogleLogin, function(evt, googleInfo) {
         $scope.googleInfo =googleInfo;
-        console.log("ja tinc la info",googleInfo);
+
         localStorageService.set('user',slugify(googleInfo.rawData.displayName));
          $rootScope.user=localStorageService.get('user');
     });
@@ -253,7 +277,7 @@ myApp.controller("Home" ,function ($scope,$http,$rootScope,jrgGoogleAuth,localSt
       return toColor(str);
     }
 
-    
+
 
     function slugify(text)
 {
@@ -303,7 +327,7 @@ refresh();
 
 
     $scope.hide = function() {
-            console.log(this.p.slug);
+
     $http({
       method: 'PUT',
       url: 'db/project/'+this.p.id,
@@ -321,7 +345,7 @@ refresh();
 
 
     $scope.show = function() {
-            console.log(this.p.slug);
+
     $http({
       method: 'PUT',
       url: 'db/project/'+this.p.id,
