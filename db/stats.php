@@ -20,7 +20,7 @@ switch($option){
       print json_encode($projects);
       break;
     case 'weeks_get':
-      $weeks = R::getAll( 'select WEEK(day) as w,sum(hours) as t from hours group by w order by w desc' );
+      $weeks = R::getAll( 'select YEAR(day) as y,WEEK(day) as w,sum(hours) as t from hours group by w,YEAR(day) order by y desc,w desc' );
       print json_encode($weeks);
       break;
     case 'count_hours':

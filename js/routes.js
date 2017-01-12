@@ -36,7 +36,7 @@ myApp.directive('ngModelOnblur', function() {
             elm.bind('blur', function() {
                 scope.$apply(function() {
                     ngModelCtrl.$setViewValue(elm.val());
-                });         
+                });
             });
         }
     };
@@ -46,23 +46,29 @@ myApp.directive('ngModelOnblur', function() {
 
 myApp.config(function($routeProvider) {
      $routeProvider.when(
-        '/home', 
+        '/home',
         {
-            templateUrl: 'partials/home.html', 
+            templateUrl: 'partials/home.html',
             controller: 'Home'
         });
     $routeProvider.when(
-    	'/hours', 
+    	'/hours',
     	{
-    		templateUrl: 'partials/day.html', 
+    		templateUrl: 'partials/day.html',
     		controller: 'Day'
     	});
     $routeProvider.when(
-    	'/projects', 
+    	'/projects',
     	{
-    		templateUrl: 'partials/projects.html', 
+    		templateUrl: 'partials/projects.html',
     		controller: 'Projects'
     	});
+      $routeProvider.when(
+        '/project/:slug',
+        {
+          templateUrl: 'partials/project.html',
+          controller: 'Project'
+        });
     $routeProvider.otherwise(
         {
             redirectTo: '/hours'

@@ -92,7 +92,7 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
 
     if(this.h.id==0) return;
     var scope=this;
-  
+
 
    $http({
           method: 'DELETE',
@@ -207,6 +207,9 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
 });
 
 
+/**
+Home
+*/
 
 
 myApp.controller("Home" ,function ($scope,$http,$rootScope,jrgGoogleAuth,localStorageService) {
@@ -389,4 +392,21 @@ refresh();
     $scope.toColor=function(str){
       return toColor(str);
     }
+});
+
+myApp.controller("Project" ,function ($scope,$rootScope,$location,localStorageService,$http) {
+
+    $scope.hide = function() {
+
+    }
+
+    $scope.show = function() {
+
+
+    }
+
+    $scope.submit=function(){
+
+    }
+
 });
