@@ -19,6 +19,16 @@ switch($option){
       $projects = R::getAll('SELECT * from project ' );
       print json_encode($projects);
       break;
+    case 'project_get':
+        $slug=$_GET['slug'];
+
+        //$query="SELECT user_id,sum(hours) from hours where project_slug='$slug' group by user_id" ;
+        $query="SELECT * from hours where project_slug='$slug'" ;
+
+        $hours = R::getAll($query);
+        print json_encode($hours);
+        break;
+
     case 'weeks_get':
       $weeks = R::getAll( 'select YEAR(day) as y,WEEK(day) as w,sum(hours) as t from hours group by w,YEAR(day) order by y desc,w desc' );
       print json_encode($weeks);
@@ -32,10 +42,23 @@ switch($option){
         R::exec( "update project set total=$t where slug='$project_slug'" );
         print "done";
         break;
+    default;
+      print "no option";
 }
 
 
 /**
+hores per usuari d'un projecte
+SELECT user_id,sum(hours) from hours where project_slug='test2' group by user_id
+
+
+SELECT * from hours as a,project as b where a.project_slug='test2' and a.project_slug=b.slug
+
+SELECT * from hours as a,project as b where a.project_slug='test2' and a.project_slug=b.slug  group by a.user_id
+SELECT sum(hours),budget,total from hours as a,project as b where a.project_slug='test2' and a.project_slug=b.slug  group by a.user_id
+
+SELECT total,project_slug,user_id,count(hours) as t FROM hours as a,project as b where a.project_slug='test2' and a.project_slug=b.slug  group by a.user_id order by t desc
+
 
 //hores de projectes
 

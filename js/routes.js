@@ -63,6 +63,13 @@ myApp.config(function($routeProvider) {
     		templateUrl: 'partials/projects.html',
     		controller: 'Projects'
     	});
+      /*
+      $routeProvider.when(
+        '/project/test',
+        {
+          templateUrl: 'partials/project.html',
+          controller: 'Project'
+        });*/
       $routeProvider.when(
         '/project/:slug',
         {

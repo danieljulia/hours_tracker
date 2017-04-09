@@ -363,7 +363,7 @@ refresh();
         // or server returns response with an error status.
       });
     }
-
+//(year:search.year,user:search.user,comments:search.comments)
 
     $scope.submit=function(){
 
@@ -394,7 +394,85 @@ refresh();
     }
 });
 
-myApp.controller("Project" ,function ($scope,$rootScope,$location,localStorageService,$http) {
+myApp.controller("Project" ,function ($scope,$routeParams,$rootScope,$location,localStorageService,$http) {
+    $scope.project=$routeParams.slug;
+    //$scope.project="test";
+
+    $scope.day="";
+    $scope.user_id="";
+    $scope.comments="";
+    $scope.total=0;
+
+    $http({
+      method: 'GET',
+      url: 'db/stats.php?option=project_get&slug='+$scope.project
+    }).then(function successCallback(response) {
+        $scope.hours=response.data;
+        for(var i=0;i<$scope.hours.length;i++){
+          $scope.hours[i].visible=true;
+        };
+
+        console.log(response.data);
+          countAll();
+      }, function errorCallback(response) {
+
+      });
+
+      $scope.dofilter=function(){
+        for(var i=0;i<$scope.hours.length;i++){
+          $scope.hours[i].visible=true;
+        };
+
+
+        console.log($scope.day,$scope.user_id,$scope.comments);
+
+        //year
+        if($scope.day!=""){
+          for(var i=0;i<$scope.hours.length;i++){
+            var h=$scope.hours[i];
+
+            if(h.day.indexOf($scope.day)==-1){
+              $scope.hours[i].visible=false;
+            }
+          };
+        }
+
+        //user_id
+        if($scope.user_id!=""){
+          for(var i=0;i<$scope.hours.length;i++){
+            var h=$scope.hours[i];
+
+            if(h.user_id.indexOf($scope.user_id)==-1){
+              $scope.hours[i].visible=false;
+            }
+          };
+        }
+
+        //comments
+        if($scope.comments!=""){
+          for(var i=0;i<$scope.hours.length;i++){
+            var h=$scope.hours[i];
+            if(h.comments==undefined){
+              $scope.hours[i].visible=false;
+            }else{
+              if(h.comments.indexOf($scope.comments)==-1){
+                $scope.hours[i].visible=false;
+              }
+            }
+          };
+        }
+
+        countAll();
+      }
+
+      function countAll(){
+        var t=0;
+        for(var i=0;i<$scope.hours.length;i++){
+          if($scope.hours[i].visible)
+            t+=parseFloat($scope.hours[i].hours);
+        }
+        $scope.total=t;
+      }
 
     $scope.hide = function() {
 
@@ -407,6 +485,10 @@ myApp.controller("Project" ,function ($scope,$rootScope,$location,localStorageSe
 
     $scope.submit=function(){
 
+    }
+
+    $scope.toColor=function(str){
+      return toColor(str);
     }
 
 });

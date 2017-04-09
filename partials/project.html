@@ -1,2 +1,17 @@
+<h1 style="border-left: 10px solid {{toColor(project)}}">{{project}}</h1>
 
-Un projecte
+
+<table class="hours project">
+  <tr >
+    <th>day</th><th>hours</th><th>user</th><th>comments</th>
+  </tr>
+  <tr >
+    <th><input type="text" ng-change="dofilter()" ng-model="day"></input></th>
+    <th class="total">{{total}}</th><th><input type="text" ng-change="dofilter()" ng-model="user_id"></input></th>
+    <th><input type="text" ng-change="dofilter()" ng-model="comments"></input></th>
+  </tr>
+<tr  ng-repeat="h in hours | filter : {visible:true}">
+   <td>{{h.day}}</td><td> {{h.hours}}h</td> <td>{{h.user_id}}</td> <td>{{h.comments}}</td>
+
+</tr>
+</table>
