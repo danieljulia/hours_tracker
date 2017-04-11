@@ -1,2 +1,4 @@
+.htpasswd
+.htaccess
 db/db_config.php
 js/config.js

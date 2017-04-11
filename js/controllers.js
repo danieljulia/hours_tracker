@@ -395,17 +395,32 @@ refresh();
 });
 
 myApp.controller("Project" ,function ($scope,$routeParams,$rootScope,$location,localStorageService,$http) {
-    $scope.project=$routeParams.slug;
-    //$scope.project="test";
+    var project=$routeParams.slug;
+    $scope.project={};
+    $scope.project.slug="";
 
     $scope.day="";
     $scope.user_id="";
     $scope.comments="";
     $scope.total=0;
 
+    //todo , maybe in the db
+
+
     $http({
       method: 'GET',
-      url: 'db/stats.php?option=project_get&slug='+$scope.project
+      url: 'db/stats.php?option=project_one_get&slug='+project
+    }).then(function successCallback(response) {
+        $scope.project=response.data;
+          $scope.project.rate=parseInt($scope.project.budget/$scope.project.total);
+      }, function errorCallback(response) {
+
+      });
+
+
+    $http({
+      method: 'GET',
+      url: 'db/stats.php?option=project_get&slug='+project
     }).then(function successCallback(response) {
         $scope.hours=response.data;
         for(var i=0;i<$scope.hours.length;i++){
@@ -417,6 +432,30 @@ myApp.controller("Project" ,function ($scope,$routeParams,$rootScope,$location,l
       }, function errorCallback(response) {
 
       });
+
+      $scope.saveproject=function(){
+        console.log($scope.project);
+        var data={
+            slug:$scope.project.slug,
+            comments:$scope.project.comments,
+            visible:$scope.project.visible,
+            budget:$scope.project.budget
+        }
+        $http({
+          method: 'PUT',
+          url: 'db/project/'+$scope.project.id,
+          data:data,
+
+        }).then(function successCallback(response) {
+          //  refresh();
+          console.log("refrescat",response);
+
+          }, function errorCallback(response) {
+            console.log("error al guardar",response);
+          });
+
+
+      };
 
       $scope.dofilter=function(){
         for(var i=0;i<$scope.hours.length;i++){
@@ -474,18 +513,7 @@ myApp.controller("Project" ,function ($scope,$routeParams,$rootScope,$location,l
         $scope.total=t;
       }
 
-    $scope.hide = function() {
 
-    }
-
-    $scope.show = function() {
-
-
-    }
-
-    $scope.submit=function(){
-
-    }
 
     $scope.toColor=function(str){
       return toColor(str);

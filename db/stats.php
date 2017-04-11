@@ -19,11 +19,18 @@ switch($option){
       $projects = R::getAll('SELECT * from project ' );
       print json_encode($projects);
       break;
+    case 'project_one_get':
+        $slug=$_GET['slug'];
+        $query="SELECT * from project where slug='$slug'" ;
+        $p = R::GetRow($query);
+        print json_encode($p);
+        break;
+
     case 'project_get':
         $slug=$_GET['slug'];
 
         //$query="SELECT user_id,sum(hours) from hours where project_slug='$slug' group by user_id" ;
-        $query="SELECT * from hours where project_slug='$slug'" ;
+        $query="SELECT * from hours where project_slug='$slug' order by day desc" ;
 
         $hours = R::getAll($query);
         print json_encode($hours);

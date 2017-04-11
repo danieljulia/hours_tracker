@@ -1,6 +1,12 @@
-<h1 style="border-left: 10px solid {{toColor(project)}}">{{project}}</h1>
+<h1 style="border-left: {{toColor(project.slug)}}">{{project.slug}}</h1>
 
-
+<!-- anna ordena això com vulguis :-*-->
+Total: {{project.total}}h
+Budget:<input type="text"  ng-model="project.budget">
+Rate:{{project.rate}} €/h
+Visible:<input type="checkbox" ng-model="project.visible" parse-int ng-true-value="1" ng-false-value="0"> {{project.visible}}
+Comments:<textarea  ng-model="project.comments"></textarea>
+<input type="button" ng-click="saveproject()" value="update">
 <table class="hours project">
   <tr >
     <th>day</th><th>hours</th><th>user</th><th>comments</th>
