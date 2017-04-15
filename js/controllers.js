@@ -212,7 +212,11 @@ Home
 */
 
 
-myApp.controller("Home" ,function ($scope,$http,$rootScope,jrgGoogleAuth,localStorageService) {
+myApp.controller("Home" ,function ($scope,$http,googleLogin,$rootScope,jrgGoogleAuth,localStorageService) {
+
+
+  //  console.log("login",googleLogin);
+  googleLogin.doLogin($scope);
 
     //hardcoded
 
@@ -282,15 +286,15 @@ myApp.controller("Home" ,function ($scope,$http,$rootScope,jrgGoogleAuth,localSt
 
 
 
-    function slugify(text)
-{
-  return text.toString().toLowerCase()
-    .replace(/\s+/g, '-')           // Replace spaces with -
-    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-    .replace(/^-+/, '')             // Trim - from start of text
-    .replace(/-+$/, '');            // Trim - from end of text
-}
+  function slugify(text)
+  {
+    return text.toString().toLowerCase()
+      .replace(/\s+/g, '-')           // Replace spaces with -
+      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+      .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+      .replace(/^-+/, '')             // Trim - from start of text
+      .replace(/-+$/, '');            // Trim - from end of text
+  }
 
 
 });
@@ -552,5 +556,13 @@ myApp.controller("Project" ,function ($scope,$routeParams,$rootScope,$location,l
     $scope.toColor=function(str){
       return toColor(str);
     }
+
+});
+
+
+
+myApp.controller("Test" ,function ($scope,$http,googleLogin,$rootScope,jrgGoogleAuth,localStorageService) {
+
+  googleLogin.doLogin(this);
 
 });
