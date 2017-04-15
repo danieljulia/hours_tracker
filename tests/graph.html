@@ -22,21 +22,46 @@ http://plottablejs.org/docs/classes/plottable.plots.bar.html
 */
 
 
+
 var data = [{ x: 1, y: 1 }, { x: 2, y: 3 }];
+doGraph(data);
 
-var xScale = new Plottable.Scales.Linear();
-var yScale = new Plottable.Scales.Linear();
-var colorScale = new Plottable.Scales.Color();
+function doGraph(data){
 
-var plot = new Plottable.Plots.Bar()
-  .addDataset(new Plottable.Dataset(data))
-  .x(function(d) { return d.x; }, xScale)
-  .y(function(d) { return d.y; }, yScale)
-  .attr("fill", "#f5383C")
-  .animated(true)
-  .labelsEnabled(true)
-//  .attr("fill", function(d) { return d.val; }, colorScale)
-  .renderTo(".component__svg");
+  var xScale = new Plottable.Scales.Linear();
+  var yScale = new Plottable.Scales.Linear();
+  var xAxis = new Plottable.Axes.Numeric(xScale, "bottom",function(i){return "wow"});
+  var yAxis = new Plottable.Axes.Numeric(yScale, "left");
+  var mylabel = new Plottable.Components.AxisLabel("hours", -90);
+
+  function getColor(indx){
+      var letters = '0123456789ABCDEF';
+      var color = '#';
+      for (var i = 0; i < 6; i++ ) {
+          color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+
+  }
+
+  var plot = new Plottable.Plots.Bar()
+    .addDataset(new Plottable.Dataset(data))
+    .x(function(d) { return d.x; }, xScale)
+    .y(function(d) { return d.y; }, yScale)
+    .attr("fill", function(d) { console.log("*",d.x);return getColor(d.x-1); })
+    .animated(true)
+    .labelsEnabled(true);
+   //.label(mylabel);
+  //  .attr("fill", function(d) { return d.val; }, colorScale)
+
+
+    var chart = new Plottable.Components.Table([
+      [yAxis, plot],
+      [mylabel, null]
+    ]);
+      chart.renderTo(".component__svg");
+
+}
 
 window.addEventListener("resize", function() {
   plot.redraw();

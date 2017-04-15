@@ -2,26 +2,25 @@
 <h2>Week {{weekNumber}}</h2>
 <h3>{{weekDay}} {{day}}</h3>
 <div class="abstract">
-<p class="day">
-Day: {{total}} hours</p>
-<p class="week">
-Week: x hours
+<p>
+Day: <strong>{{total}} h</strong><br>
+Week: <strong>x hours</strong>
 </p>
 
 </div>
-<ul class="hours" >
-<li ng-repeat="h in hours" style="border-left: 10px solid {{toColor(h.project_slug)}}">{{h.project_slug}} {{h.hours}}h {{h.comments}}<a ng-click="del()">x</a></li>
+<ul class="info_hores_projectes">
+<li ng-repeat="h in hours"><strong>{{h.project_slug}}</strong> {{h.hours}}h <a ng-click="del()" class="esborrar">x</a><br><span class="comments">{{h.comments}}</span></li>
 </ul>
 </div>
 
-<ul class="projects add">
+<ul class="projects_add_hores">
 <li  ng-repeat="p in projects">
 
-  <a href='#project/{{p.slug}}' style="border-left: 10px solid {{toColor(p.slug)}}" class="nom">{{p.slug}}</a>
+  <a href='#project/{{p.slug}}' style="border-left: 10px solid {{toColor(p.slug)}}" class="nom">{{p.slug}}</a> 
   <input  ng-enter="add()" name="hours{{p.slug}}" data-ng-model="myhours" class="form-control" placeholder="hours" required />
-  <a title="add hours" ng-click="add()">+</a>
-  <a title="add comment" class="comment" ng-click="docomment($index)">c</a>
-  <input type="text" ng-show="p.c" data-ng-model="mycomment" placeholder="your comment">
+  <a title="add hours" ng-click="add()" class="botonet">+</a>
+  <a title="add comment" class="comment" ng-click="docomment($index)" class="botonet">c</a>
+  <input type="text" ng-show="p.c" data-ng-model="mycomment" placeholder="your comment" class="comentari">
 
  </li>
 </ul>

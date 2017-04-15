@@ -1,22 +1,25 @@
-<h1>Dashboard</h1>
-
-
-
+<div id="login">
 <button  ng-show="user == null" ng-click='googleLogin()'>Login</button>
 <button  ng-show="user != null" ng-click='googleLogout()'>Logout</button>
+</div>
 
-<h1>Stats</h1>
-<h2>Projects</h2>
+<h1><span class="claret">Dashboard / Stats /</span> Projects</h1>
 
-<ul class="projects">
-<li  ng-repeat="p in projects" style="border-left: 10px solid {{toColor(p.slug)}}">
-  <a href='#project/{{p.slug}}'>{{p.slug}} : {{p.total}}h
-    <span ng-if="p.budget>0" class='info'>{{p.budget}}€ </span>
-    <span ng-if="p.budget>0" class="ratio">ratio: {{p.budget/p.total | number:0}}€/h</span>
-  </a></li>
-</ul>
+<table class="projects taula">
+	<tr class="encapcalament">
+    <th>Projecte</th><th>Hores</th><th>Pressupost</th><th>Preu/hora</th>
+  </tr>
+<tr ng-repeat="p in projects" style="border-left: 10px solid {{toColor(p.slug)}}">
+  <td><strong><a href='#project/{{p.slug}}'>{{p.slug}}</a></strong></td>
+  <td>{{p.total}}h</td>
+  <td><span ng-if="p.budget>0" class='info'>{{p.budget}}€ </span></td>
+  <td><span ng-if="p.budget>0" class="ratio">{{p.budget/p.total | number:0}}€/h</span></td>
+</tr>
+</table>
 
+<div class="setmanes">
 <h2>Weeks</h2>
 <ul class="weeks">
 <li  ng-repeat="w in weeks"> {{w.y}}/{{w.w}} :  {{w.t}}h</li>
 </ul>
+</div>

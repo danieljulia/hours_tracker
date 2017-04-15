@@ -394,6 +394,9 @@ refresh();
     }
 });
 
+
+var users;
+
 myApp.controller("Project" ,function ($scope,$routeParams,$rootScope,$location,localStorageService,$http) {
     var project=$routeParams.slug;
     $scope.project={};
@@ -405,6 +408,9 @@ myApp.controller("Project" ,function ($scope,$routeParams,$rootScope,$location,l
     $scope.total=0;
 
     //todo , maybe in the db
+
+
+
 
 
     $http({
@@ -422,12 +428,40 @@ myApp.controller("Project" ,function ($scope,$routeParams,$rootScope,$location,l
       method: 'GET',
       url: 'db/stats.php?option=project_get&slug='+project
     }).then(function successCallback(response) {
+        users=[];
+
         $scope.hours=response.data;
+
         for(var i=0;i<$scope.hours.length;i++){
           $scope.hours[i].visible=true;
+          if( users[$scope.hours[i].user_id]==undefined){
+            users[$scope.hours[i].user_id]=parseFloat($scope.hours[i].hours);
+          }else{
+            users[$scope.hours[i].user_id]+=parseFloat($scope.hours[i].hours);
+          }
         };
+        var data=[];
+        var i=0;
+        for (var key in users) {
+          data[i]={x:i+1,y:users[key]};
 
-        console.log(response.data);
+        //  users[i]=key;
+            i++;
+       }
+
+       for (var key in users) {
+         users.push({name:key,h:users[key]});
+
+       }
+       $scope.users=users;
+
+
+
+        //console.log(users);
+        //
+        //var data = [{ x: 1, y: 1 }, { x: 2, y: 3 }];
+        doGraph(data);
+
           countAll();
       }, function errorCallback(response) {
 
