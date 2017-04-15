@@ -13,11 +13,14 @@ Date.prototype.formatDate = function() {
 
 myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogleAuth,$http) {
 
+  console.log($rootScope.user);
+
+/*
   if($rootScope.user==null){
     $location.path("home");
     return;
   }
-
+*/
     $scope.aVariable = 'anExampleValueWithinScope';
     $scope.valueFromService = UtilSrvc.helloWorld("Amy");
 
@@ -216,7 +219,7 @@ myApp.controller("Home" ,function ($scope,$http,googleLogin,$rootScope,jrgGoogle
 
 
   //  console.log("login",googleLogin);
-  googleLogin.doLogin($scope);
+  //googleLogin.doLogin($scope);
 
     //hardcoded
 
@@ -254,6 +257,7 @@ myApp.controller("Home" ,function ($scope,$http,googleLogin,$rootScope,jrgGoogle
     $scope.googleLogin =function() {
 
         jrgGoogleAuth.login({'extraInfo':{'user_id':true}, 'callback':{'evtName':evtGoogleLogin, 'args':[]} });
+        console.log(jrgGoogleAuth);
     };
 
      $scope.googleLogout=function() {
@@ -273,7 +277,7 @@ myApp.controller("Home" ,function ($scope,$http,googleLogin,$rootScope,jrgGoogle
 
     $scope.$on(evtGoogleLogin, function(evt, googleInfo) {
         $scope.googleInfo =googleInfo;
-
+        $rootScope.googleInfo=googleInfo;
         localStorageService.set('user',slugify(googleInfo.rawData.displayName));
          $rootScope.user=localStorageService.get('user');
     });
