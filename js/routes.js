@@ -2,8 +2,9 @@
 
 var myApp = angular.module('myApp', [
     //additional angular modules
-'googleauth','LocalStorageModule'
+'ngRoute','googleauth','LocalStorageModule','ngSanitize','MassAutoComplete'
 ])
+//'ngSanitize'
 
 
 angular.module('myApp').directive('ngEnter', function() {

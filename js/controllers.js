@@ -49,9 +49,13 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
 
 
 
+
+
     $scope.add=function(){
 
-        if(parseFloat(this.myhours)==0) return;
+
+        if(parseFloat(this.myhours)==0 || this.myhours==undefined) return;
+
 
       //  alert($scope.mycomment);
         //console.log($scope.p);
@@ -87,6 +91,8 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
 
 
     }
+
+
  $scope.del=function(){
 
 
@@ -109,6 +115,12 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
 
  }
 
+ $scope.setcomment=function($index){
+
+   $scope.projects[$index].c=1;
+
+ }
+
  $scope.docomment=function($index){
 
    $scope.projects[$index].c=!$scope.projects[$index].c;
@@ -116,6 +128,31 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
 
    //$scope.showcomment=true;
  }
+
+ function suggest_comment(term) {
+   //ajax call to get most used comments for the project but only first time
+   var q = term.toLowerCase().trim();
+   var results = [];
+
+   // Find first 10 states that start with `term`.
+   /*
+   for (var i = 0; i < states.length && results.length < 10; i++) {
+     var state = states[i];
+     if (state.toLowerCase().indexOf(q) === 0)
+       results.push({ label: state, value: state });
+   }
+*/
+results.push({ label: "Blah", value: "Blah" });
+results.push({ label: "Blah", value: "Blah" });
+results.push({ label: "Blah", value: "Blah" });
+
+   return results;
+ }
+
+ $scope.autocomplete_options = {
+   suggest: suggest_comment
+ };
+
 
     $scope.next=function(){
     	$scope.d.setDate($scope.d.getDate() + 1);

@@ -16,12 +16,13 @@ Week: <strong>x hours</strong>
 <ul class="projects_add_hores">
 <li  ng-repeat="p in projects">
 
-  <a href='#project/{{p.slug}}' style="border-left: 10px solid {{toColor(p.slug)}}" class="nom">{{p.slug}}</a> 
-  <input  ng-enter="add()" name="hours{{p.slug}}" data-ng-model="myhours" class="form-control" placeholder="hours" required />
+  <a href='#project/{{p.slug}}' style="border-left: 10px solid {{toColor(p.slug)}}" class="nom">{{p.slug}}</a>
+  <input  ng-change="setcomment($index)" ng-enter="add()" name="hours{{p.slug}}" data-ng-model="myhours" class="form-control" placeholder="hours" required />
   <a title="add hours" ng-click="add()" class="botonet">+</a>
-  <a title="add comment" class="comment" ng-click="docomment($index)" class="botonet">c</a>
-  <input type="text" ng-show="p.c" data-ng-model="mycomment" placeholder="your comment" class="comentari">
-
+<!--  <a title="add comment" class="comment" ng-click="docomment($index)" class="botonet">c</a> -->
+ <div mass-autocomplete>
+  <input type="text" ng-show="p.c"  ng-enter="add()" data-ng-model="mycomment" mass-autocomplete-item="autocomplete_options" placeholder="your comment" class="comentari">
+</div>
  </li>
 </ul>
 
