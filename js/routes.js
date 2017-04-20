@@ -45,6 +45,57 @@ myApp.directive('ngModelOnblur', function() {
 */
 
 
+
+/**
+https://github.com/jackrabbitsgroup/angular-google-auth/blob/master/google-auth.js
+*/
+
+
+myApp.factory('googleLogin', function(jrgGoogleAuth){
+  var login={};
+
+  jrgGoogleAuth.init({'client_id':config.googleClientId, 'scopeHelp':['login']});
+
+
+  login.doLogin=function($scope){
+    //console.log("here we have the scope",gapi,jrgGoogleAuth,$scope);
+    var evtGoogleLogin ="evtGoogleLogin";
+    $scope.googleLogin =function() {
+      console.log("jrg",jrgGoogleAuth,gapi);
+        jrgGoogleAuth.login({'extraInfo':{'user_id':true}, 'callback':{'evtName':evtGoogleLogin, 'args':[]} });
+    };
+  //  jrgGoogleAuth.login({'extraInfo':{'user_id':true}, 'callback':{'evtName':evtGoogleLogin, 'args':[]} });
+    $scope.$on(evtGoogleLogin, function(evt, googleInfo) {
+      console.log("Google login",evt,googleInfo);
+      //  login.googleInfo =googleInfo;
+          console.log("*****",login.googleInfo.user);
+
+    });
+
+  }
+
+/*
+  $scope.googleLogin =function() {
+    console.log("jrg",jrgGoogleAuth,gapi);
+      jrgGoogleAuth.login({'extraInfo':{'user_id':true}, 'callback':{'evtName':evtGoogleLogin, 'args':[]} });
+  };
+
+  $scope.googleLogout=function() {
+
+  };
+
+  $scope.$on(evtGoogleLogin, function(evt, googleInfo) {
+    console.log("Google login",evt,googleInfo);
+      login.googleInfo =googleInfo;
+  });
+*/
+  //$scope.googleLogin();
+
+  return login;
+});
+
+
+
 myApp.config(function($routeProvider) {
      $routeProvider.when(
         '/home',
@@ -71,6 +122,13 @@ myApp.config(function($routeProvider) {
           templateUrl: 'partials/project.html',
           controller: 'Project'
         });*/
+        $routeProvider.when(
+          '/test',
+          {
+            templateUrl: 'partials/test.html',
+            controller: 'Test'
+          });
+
       $routeProvider.when(
         '/project/:slug',
         {
