@@ -19,6 +19,18 @@ switch($option){
       $projects = R::getAll('SELECT * from project ' );
       print json_encode($projects);
       break;
+    case 'week_user_get': //todo  ///hours_tracker/db/stats.php?option=week_user_get&user=daniel-juli&w=16&y=2017
+        $y=$_GET['y'];
+        $w=$_GET['w'];
+        $user=$_GET['user'];
+
+        $query="select YEAR(day) as ye, WEEK(day) as w,sum(hours) as t from hours  where user_id='$user'  group by w,ye  having ye=$y and w=$w order by ye desc, w desc";
+        
+        $total = R::getAll($query);
+
+        print json_encode($total);
+        break;
+
     case 'project_one_get':
         $slug=$_GET['slug'];
         $query="SELECT * from project where slug='$slug'" ;
