@@ -11,29 +11,25 @@ Date.prototype.formatDate = function() {
 
 
 
-myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogleAuth,$http) {
+myApp.controller("Day" ,function ($scope, $sce,$rootScope,$location,UtilSrvc,jrgGoogleAuth,$http) {
 
-  console.log($rootScope.user);
+  console.log("user....",$rootScope.user);
 
-/*
+
   if($rootScope.user==null){
     $location.path("home");
     return;
   }
-*/
-    $scope.aVariable = 'anExampleValueWithinScope';
-    $scope.valueFromService = UtilSrvc.helloWorld("Amy");
 
     var d=new Date();
+    var comments=[];
     d.setHours(12);
-	d.setMinutes(0);
-	d.setSeconds(0);
-	d.setMilliseconds(0);
-	$scope.d=d;
-  $scope.showcomment=false;
-	convert();
-
-
+  	d.setMinutes(0);
+  	d.setSeconds(0);
+  	d.setMilliseconds(0);
+  	$scope.d=d;
+    $scope.showcomment=false;
+  	convert();
 
      //get all the projects
 
@@ -55,14 +51,9 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
 
 
     $scope.add=function(){
-
-
         if(parseFloat(this.myhours)==0 || this.myhours==undefined) return;
-
-
       //  alert($scope.mycomment);
         //console.log($scope.p);
-
         var data={
             project_slug:this.p.slug,
             hours:this.myhours,
@@ -70,7 +61,6 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
             user_id:$rootScope.user,
             comments:this.mycomment
         }
-
 
         this.myhours=null;
         this.mycomment=null;
@@ -94,6 +84,30 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
 
 
     }
+
+    function getweekhours(){
+
+        var scope=this;
+
+        var user=$rootScope.user;
+        var y=$scope.d.getFullYear();
+        var w=$scope.d.getWeekNumber();
+
+        $http({
+          method: 'GET',
+          url: "db/stats.php?option=week_user_get&w="+w+"&y="+y+"&user="+user
+        }).then(function successCallback(response) {
+            console.log("ja tinc el resultat",response.data);
+
+              $scope.week_total=response.data.t;
+          }, function errorCallback(response) {
+
+          });
+
+
+
+    }
+
 
 
  $scope.del=function(){
@@ -132,10 +146,64 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
    //$scope.showcomment=true;
  }
 
+ function comments_load(slug, func){
+
+   $http({
+     method: 'GET',
+     url: 'db/stats.php?option=comments_get_project&slug='+slug
+
+       }).then(function successCallback(response) {
+         comments[slug]=response.data;
+         func();
+
+               }, function errorCallback(response) {
+
+               });
+ }
+
+ function comments_process(term,slug){
+
+   var coms=comments[slug];
+   var results = [];
+   var q = term.toLowerCase().trim();
+   var c=0;
+   for(var i=0;i<coms.length;i++){
+
+       if (coms[i].comments.toLowerCase().indexOf(q) != -1){
+         //results.push({ label: state, value: state });
+         results.push({ label: coms[i].comments, value: coms[i].comments });
+         c++;
+     }
+
+
+   }
+
+   if(c==0){
+     for(var i=0;i<coms.length;i++){
+           results.push({ label: coms[i].comments, value: coms[i].comments });
+     }
+     return results;
+   }
+
+      return results;
+ }
+
  function suggest_comment(term) {
    //ajax call to get most used comments for the project but only first time
-   var q = term.toLowerCase().trim();
-   var results = [];
+   //if(comments[''])
+
+   var slug=$scope.projects[this.id].slug;
+
+   if(comments[slug]==undefined){
+     return comments_load(slug,function(){
+
+       return comments_process(term,slug);
+
+     });
+   }
+    return comments_process(term,slug);
+  // var q = term.toLowerCase().trim();
+   //var results = [];
 
    // Find first 10 states that start with `term`.
    /*
@@ -145,15 +213,19 @@ myApp.controller("Day" ,function ($scope, $rootScope,$location,UtilSrvc,jrgGoogl
        results.push({ label: state, value: state });
    }
 */
-results.push({ label: "Blah", value: "Blah" });
-results.push({ label: "Blah", value: "Blah" });
-results.push({ label: "Blah", value: "Blah" });
+//results.push({ label: "Blah", value: "Blah" });
+//results.push({ label: "Blah", value: "Blah" });
+//results.push({ label: "Blah", value: "Blah" });
 
-   return results;
+   //return results;
  }
 
- $scope.autocomplete_options = {
-   suggest: suggest_comment
+ $scope.autocomplete_options =function($index){
+  return {
+    suggest: suggest_comment,
+    id:$index
+  };
+
  };
 
 
@@ -201,6 +273,9 @@ results.push({ label: "Blah", value: "Blah" });
 
     function gethours(){
             //get hours for current day
+
+        getweekhours();
+
 
       $http({
         method: 'GET',
@@ -305,6 +380,7 @@ myApp.controller("Home" ,function ($scope,$http,googleLogin,$rootScope,jrgGoogle
 
     };
 
+    console.log("assignant usuari al rootScope");
     $rootScope.user=localStorageService.get('user');
 
 

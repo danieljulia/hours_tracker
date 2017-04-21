@@ -4,7 +4,7 @@
 <div class="abstract">
 <p>
 Day: <strong>{{total}} h</strong><br>
-Week: <strong>x hours</strong>
+Week: <strong>{{week_total}} hours</strong>
 </p>
 
 </div>
@@ -21,7 +21,7 @@ Week: <strong>x hours</strong>
   <a title="add hours" ng-click="add()" class="botonet">+</a>
 <!--  <a title="add comment" class="comment" ng-click="docomment($index)" class="botonet">c</a> -->
  <div mass-autocomplete>
-  <input type="text" ng-show="p.c"  ng-enter="add()" data-ng-model="mycomment" mass-autocomplete-item="autocomplete_options" placeholder="your comment" class="comentari">
+  <input type="text" ng-show="p.c"  ng-enter="add()" data-ng-model="mycomment" mass-autocomplete-item="autocomplete_options($index)" placeholder="your comment" class="comentari">
 </div>
  </li>
 </ul>

@@ -24,12 +24,27 @@ switch($option){
         $w=$_GET['w'];
         $user=$_GET['user'];
 
-        $query="select YEAR(day) as ye, WEEK(day) as w,sum(hours) as t from hours  where user_id='$user'  group by w,ye  having ye=$y and w=$w order by ye desc, w desc";
-        
-        $total = R::getAll($query);
+        //no funciona set datefirst 1;
+        $query=" select YEAR(day) as ye, WEEK(day) as w,sum(hours) as t from hours  where user_id='$user'  group by w,ye  having ye=$y and w=$w order by ye desc, w desc";
+
+        $total = R::GetRow($query);
 
         print json_encode($total);
         break;
+
+    case 'comments_get_project':
+        $slug=$_GET['slug'];
+        $query="select comments, count(*) as frequency
+        from hours
+        where comments is not NULL
+        and project_slug='$slug'
+        group by comments
+        order by count(*) desc";
+        $comments = R::getAll($query);
+        print json_encode($comments);
+        break;
+
+      
 
     case 'project_one_get':
         $slug=$_GET['slug'];
@@ -49,7 +64,7 @@ switch($option){
         break;
 
     case 'weeks_get':
-      $weeks = R::getAll( 'select YEAR(day) as y,WEEK(day) as w,sum(hours) as t from hours group by w,YEAR(day) order by y desc,w desc' );
+      $weeks = R::getAll( ' select YEAR(day) as y,WEEK(day) as w,sum(hours) as t from hours group by w,YEAR(day) order by y desc,w desc' );
       print json_encode($weeks);
       break;
     case 'count_hours':
